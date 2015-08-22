@@ -1,0 +1,191 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPageAdmin.master.cs" Inherits="SIMS.UI.Admin.MasterPageAdmin" %>
+<%@ Import Namespace="SIMS.Models" %>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Dashboard Template for Bootstrap</title>
+
+
+    <!-- Bootstrap core CSS -->
+      <link href="../../Content/bootstrap.css" rel="stylesheet" />
+      <link href="../../Content/bootstrap-theme.min.css" rel="stylesheet" />
+      <link href="../../Content/dashboard.css" rel="stylesheet" />
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+      <script src="Scripts/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+      
+      <asp:ContentPlaceHolder ID="head" runat="server">
+          
+
+      </asp:ContentPlaceHolder>
+  </head>
+
+  <body>
+     <form id="form1" runat="server">
+         
+            <%
+
+                //   string codeUser = (string)Session["adminEmail"];
+
+                if (Session["loginInformation"] != null)
+                {
+                    LoginModel loginModel = (LoginModel)Session["loginInformation"];
+                    if (loginModel.Type == 1)
+                    {
+                        adminDiv2.Style.Add("display", "inline");
+                        adminDiv1.Style.Add("display", "inline");
+                        logoutRegion.Style.Add("display", "inline");
+                        userInformationRegion.InnerText = loginModel.Name;
+                        loginPageDiv.Style.Add("display", "none");
+                        studentDiv.Style.Add("display", "none");
+
+                    }
+                    else
+                    {
+                        adminDiv1.Style.Add("display", "none");
+                        adminDiv2.Style.Add("display", "none");
+                        logoutRegion.Style.Add("display", "inline");
+                        userInformationRegion.InnerText = loginModel.Name;
+                        loginPageDiv.Style.Add("display", "none");
+                        studentDiv.Style.Add("display", "inline");
+                    }
+                }
+                else
+                {
+                    adminDiv2.Style.Add("display", "none");
+                    adminDiv1.Style.Add("display", "none");
+                    logoutRegion.Style.Add("display", "none");
+                    userInformationRegion.Style.Add("display", "none");
+                    studentDiv.Style.Add("display", "none");
+
+                }
+        %>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="">SIMS</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-left">
+              <%--common--%>
+              <div class="nav navbar-nav" runat="server" id="commonDiv1">
+            <li><a href="../Admin/Home.aspx">Dashboard</a></li>
+              </div>
+             <%-- adminDiv2--%>
+              <div id="adminDiv2" class="nav navbar-nav" runat="server">
+            <li><a href="../Admin/AddAdmin.aspx">Settings</a></li>            
+            <li><a href="../Admin/Documentation.aspx">Documentation</a></li>
+              </div>
+             <%-- studentDiv--%>
+              <div id="studentDiv" class="nav navbar-nav" runat="server">
+              <li><a href="../Student/StudentHome.aspx">My Information</a></li>
+              <li><a href="../Student/StudentResult.aspx">Result</a></li>
+               <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              Registration <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="../Student/SemisterRegistration.aspx">Semister registration</a></li>
+               <li><a href="../Student/BacklogRegistration.aspx">Backlog registration</a></li>               
+               <li class="divider"></li>               
+            </ul>
+         </li>          
+              <li><a href="../Student/GraduationStatus.aspx">Progress report</a></li>
+              </div>
+        <%--      there something common--%>
+              <div id="loginPageDiv" runat="server" class="nav navbar-nav">
+               <li><a href="../Admin/Login.aspx">Login</a></li>
+              </div>
+          </ul> 
+             <p class="navbar-text navbar-right" id="userInformationRegion" runat="server">       
+                        
+                    </p>
+                    <p class="navbar-text navbar-right" id="logoutRegion" runat="server">        
+                       <%-- <asp:LinkButton ID="logOutButton" runat="server" OnClick="logOutButton_OnClick">Logout</asp:LinkButton>--%>
+                   <%--<a runat="server" id="logOutButton" CausesValidation="False">Logout</a>--%>
+                   <asp:LinkButton ID="logoutButton" CssClass="pull-right" OnClick="logoutButton_Click"  CausesValidation="False" runat="server" >Logout</asp:LinkButton>
+                         </p>                    
+        </div>          
+      </div>
+    </nav>
+  <%--adminDiv--%>
+    <div class="container-fluid" id="adminDiv1">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar" id="adminDiv1" runat="server">
+          <ul class="nav nav-sidebar">
+            
+            <li class="active"><a href="">Overview <span class="sr-only">(current)</span></a></li>
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               Add <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">               
+               <li><a href="../Admin/AddStudentSession.aspx">Add Session</a></li>
+               <li><a href="../Admin/AddNationality.aspx">Add Nationality</a></li>
+               <li class="divider"></li>
+                <li><a href="../Admin/AddDepartment.aspx">Add Department</a></li>
+                <li><a href="../Admin/AddFaculty.aspx">Add Faculty</a></li>
+                <li class="divider"></li>
+               <li><a href="../Admin/AddStudent.aspx">Student's Information</a></li>               
+               <li><a href="../Admin/AddTeacher.aspx">Teacher's Information</a></li>
+                <li><a href="../Admin/GiveRegistrationPermission.aspx">Registration Permission</a></li>
+            </ul>
+         </li>           
+              <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              Show <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="../Admin/ShowTeacher.aspx">Teacher's Information</a></li>
+               <li><a href="../Admin/ShowStudent.aspx">Student's Information</a></li>
+               <li><a href="../Admin/ShowAdmins.aspx">Admins</a></li>
+               <li class="divider"></li>               
+            </ul>
+         </li>                                        
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="../Admin/ShowStudentResult.aspx">Show Result</a></li>
+            <li><a href="../Admin/AddStudentResult.aspx">Add Result</a></li>
+            <li><a href="../Admin/AddStudentBacklogCourse.aspx">Add Backlog</a></li> 
+                      
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="">Nav item again</a></li>  
+                     
+          </ul>
+        </div>
+          <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+              
+          </asp:ContentPlaceHolder>          
+      </div>
+    </div>
+</form>    
+      <script src="../../Scripts/jquery-1.9.1.min.js"></script>
+      <script src="../../Scripts/bootstrap.min.js"></script>
+  </body>
+</html>

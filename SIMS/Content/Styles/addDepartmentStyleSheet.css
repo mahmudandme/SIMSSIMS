@@ -1,0 +1,16 @@
+﻿#saveDepartmentButton {
+    float: right;
+    width: 100px;
+    height: 25px;
+    font-weight: bold;
+}
+
+.myButtonClass {
+    float: right;
+    width: 100px;
+    height: 25px;
+    font-weight: bold;
+}
+.btn {
+    padding: 7px 30px;
+}
